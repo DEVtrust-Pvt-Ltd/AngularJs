@@ -167,6 +167,7 @@ export class SubmitProposalLumpsumComponent implements OnInit {
   }
 
   // This function is used to receive user notifications via API
+
   getNotificationsCountByID(obj: List): void {
     let modifiers = {
       url: obj.url,
