@@ -18,9 +18,9 @@ interface List {
   styleUrls: ['./submit-proposal-lumpsum.component.scss']
 })
 
-
 export class SubmitProposalLumpsumComponent implements OnInit {
 
+  // Here all variables declared
   cover_letter_text = '';
   Scope_of_Work_text = '';
   Methodologies_text = '';
@@ -41,7 +41,6 @@ export class SubmitProposalLumpsumComponent implements OnInit {
 
     ]
   };
-
   files: any = [];
   submitted: boolean = false;
   radioBtnDefault: boolean;
@@ -79,7 +78,6 @@ export class SubmitProposalLumpsumComponent implements OnInit {
   addnewRowCount: boolean = true;
   searchwidth: any = 100;
 
-
   constructor(private _snackBar: MatSnackBar, private baseService: BaseService, private formBuilder: FormBuilder, private route: ActivatedRoute, private spinnerService: NgxSpinnerService, private routering: Router) {
     this.typeSelected = 'ball-fussion';
     this.showDayduration = false;
@@ -98,7 +96,7 @@ export class SubmitProposalLumpsumComponent implements OnInit {
     this.totalServiceFee = 0;
     this.estimateServiceFee = 0;
 
-    //Form Declaration
+    // Start submit proposal form declaration
     this.submitProposalLumpsum = this.formBuilder.group({
       coverLetter: ['', Validators.required],
       relatedWork: [''],
@@ -115,13 +113,14 @@ export class SubmitProposalLumpsumComponent implements OnInit {
       bid: ['']
     });
 
-    //Get URL Data
+    // Get URL data through query params
     this.route.queryParams
       .subscribe(params => {
         this.jobId = params.jobId;
         this.talentId = params.talentId;
-      });
-    // Get URL Parameter through snapshot
+    });
+
+    // Get URL parameter through snapshot
     const searchType = this.route.snapshot.paramMap.get('searchType');
     const searchKey = this.route.snapshot.paramMap.get('searchKey');
     if (searchType) {
@@ -129,9 +128,11 @@ export class SubmitProposalLumpsumComponent implements OnInit {
       this.searchQueryType = trim(searchType);
       this.searchText = trim(searchKey);
     }
+
+    // This function is used for initialization
     this.onLoadAPIs();
 
-    //Set Validation according changing Bypass value
+    // Set validation according changing bypass value
     this.submitProposalLumpsum.get('applyproposalType').valueChanges.subscribe(
       (mode: string) => {
         console.log(mode);
@@ -154,9 +155,9 @@ export class SubmitProposalLumpsumComponent implements OnInit {
         control.controls[0]['controls']['ammount'].updateValueAndValidity();
       }
     );
-
   }
-  //This function is used for connect API
+
+  // This function is used for connect API (user-notifications-count)
   onLoadAPIs() {
     let notification: List = {
       url: 'user-notifications-count',
@@ -165,7 +166,7 @@ export class SubmitProposalLumpsumComponent implements OnInit {
     this.getNotificationsCountByID(notification);
   }
 
-
+  // This function is used to receive user notifications via API
   getNotificationsCountByID(obj: List): void {
     let modifiers = {
       url: obj.url,
@@ -183,16 +184,17 @@ export class SubmitProposalLumpsumComponent implements OnInit {
       });
   }
 
+  // This function is used to search string without any spaces
   searchUrlString(list: any) {
     this.searchText = trim(list[0].searchText);
     this.searchQueryType = trim(list[0].searchType);
     this.searchQueryType = trim(list[0].searchText);
   }
 
-  // convenience getter for easy access to form fields
+  // Convenience getter for easy access to form fields
   get f() { return this.submitProposalLumpsum.controls; }
 
-  //This is used for message alert popup.
+  // This is used for message alert popup.
   openSnackBar(msg, type) {
     this._snackBar.open(msg, 'X', {
       horizontalPosition: 'end',
@@ -202,10 +204,12 @@ export class SubmitProposalLumpsumComponent implements OnInit {
     });
   }
 
+  // It is used to return value as an array format
   get formArr() {
     return (<FormArray>this.submitProposalLumpsum.get('Rows')).controls.length;
   }
 
+  // In submit proposal lumpsum form, initalize first row at Project Milestones section
   initRows() {
     return this.formBuilder.group({
       discreption: ['', Validators.required],
@@ -214,7 +218,7 @@ export class SubmitProposalLumpsumComponent implements OnInit {
     });
   }
 
-  // This function is used for append new rows
+  // This function is used for append new rows at Project Milestones section
   addNewRow() {
     const control = <FormArray>this.submitProposalLumpsum.controls['Rows'];
     if (control.value.length < 7) {
@@ -222,10 +226,9 @@ export class SubmitProposalLumpsumComponent implements OnInit {
     } else {
       this.addnewRowCount = false;
     }
-
   }
 
-  // This function is used for prepend new rows
+  // This function is used for prepend new rows at Project Milestones section
   deleteRow(index: number) {
     const control = <FormArray>this.submitProposalLumpsum.get('Rows');
     if (control.value.length <= 7) {
@@ -235,9 +238,8 @@ export class SubmitProposalLumpsumComponent implements OnInit {
     this.getAmountMilestone(index);
   }
 
-  //Upload File Validation
+  // This is used for file upload validation at Attachments section
   onFileChange(event) {
-    console.log('File - ', event.target.files)
     if (event.target.files.length <= 5) {
       for (var i = 0; i < event.target.files.length; i++) {
         if (event.target.files[i].type == 'application/pdf') {
@@ -258,16 +260,17 @@ export class SubmitProposalLumpsumComponent implements OnInit {
     } else {
       this.openSnackBar('Only five attachments are allowed!', 'error');
     }
-
     if (this.files.length <= 5) {
       this.files;
     }
   }
 
+  // This is used for file remove  at Attachments section
   deleteFilePreviewRow(index: number) {
     this.files.splice(index, 1);
   }
 
+  // This is used to filter value in proposal lumpsum
   getDurationdata(durationValue: string) {
     if (durationValue === 'Other') {
       this.showDayduration = true;
@@ -276,7 +279,7 @@ export class SubmitProposalLumpsumComponent implements OnInit {
     }
   }
 
-
+  // This is used to get mildstone ammount
   getAmountMilestone(index: number) {
     const control = <FormArray>this.submitProposalLumpsum.get('Rows');
     const arr = [control.value];
@@ -286,19 +289,21 @@ export class SubmitProposalLumpsumComponent implements OnInit {
     this.estimateServiceFee = parseFloat((this.totalServiceFee - (this.totalServiceFee * 10) / 100).toFixed(2));
   }
 
+  // This is used to get project bid ammount
   getBidAmount(value) {
     this.projectBidAmount = value;
     this.constalServiceFee = ((this.projectBidAmount * 10) / 100).toFixed(2);
     this.estimateEarnFee = (this.projectBidAmount - (this.projectBidAmount * 10) / 100).toFixed(2);
   }
 
+  // This is used to get total recive ammount
   getReciveAmount(value) {
     this.estimateEarnFee = value;
     this.projectBidAmount = ((this.estimateEarnFee * 100) / 90).toFixed(2); //(100-10)=90 calculation for 10% only.
     this.constalServiceFee = ((this.projectBidAmount * 10) / 100).toFixed(2);
   }
 
-  //Form Submission
+  // This function is used for final submit
   onSubmit() {
     this.submitted = true;
     this.spinnerService.show();
@@ -311,10 +316,12 @@ export class SubmitProposalLumpsumComponent implements OnInit {
       } else {
         let scheduleOthers = '';
         if (this.submitProposalLumpsum.value.expectCompletiondate == 'Other') {
+          // To get value from submit-proposal-form
           const nos = (<HTMLInputElement>document.getElementById('nos')).value;
           const typeOfstatus = (<HTMLInputElement>document.getElementById('typeOfstatus')).value;
           scheduleOthers = nos + '-' + typeOfstatus;
         }
+        // Initialize duration
         const duration: any = [{
           "start_date": this.submitProposalLumpsum.value.expectStartdate,
           "completion_date": this.submitProposalLumpsum.value.expectCompletiondate,
@@ -322,31 +329,31 @@ export class SubmitProposalLumpsumComponent implements OnInit {
           "comments": this.textscedulemessage
         }];
         if (this.submitProposalLumpsum.value.applyproposalType == 'project') {
+          // To get value from submit-proposal-form
           const constalService = (<HTMLInputElement>document.getElementById('projectserviceFee')).value;
           const estimateServiceFee = (<HTMLInputElement>document.getElementById('receiveAmount')).value;
           const totalServiceFee = (<HTMLInputElement>document.getElementById('bid')).value;
-
+          // Initialize earningPercentage
           const earningPercentage: any = [{
             "constal_service_charge": constalService,
             "your_earning": estimateServiceFee,
             "total_cost": totalServiceFee
           }];
-
           this.earningPercentage = earningPercentage;
         } else {
+          // To get value from submit-proposal-form
           const constalService = (<HTMLInputElement>document.getElementById('constalService')).value;
           const estimateServiceFee = (<HTMLInputElement>document.getElementById('estimateServiceFee')).value;
           const totalServiceFee = (<HTMLInputElement>document.getElementById('totalServiceFee')).value;
-
+          // Initialize earningPercentage
           const earningPercentage: any = [{
             "constal_service_charge": constalService,
             "your_earning": estimateServiceFee,
             "total_cost": totalServiceFee
           }];
-
           this.earningPercentage = earningPercentage;
         }
-
+        // Initialize form data as array
         const formData = new FormData();
         formData.append("proposalType", "lumpsum");
         formData.append("jobId", this.jobId);
@@ -366,16 +373,16 @@ export class SubmitProposalLumpsumComponent implements OnInit {
           formData.append("fileToUpload", this.files[i]);
         }
         
-        //This is used for insert reason decline status.
+        //This is used for declare interfaces
         let proposalHourlyInsertlist: List =
         {
           url: 'save-talent-proposals',
           filters: formData
         }
 
+        // It is used to post data thru API and submit all records in database
         this.baseService.create(proposalHourlyInsertlist).subscribe(data => {
           if (data.status == 1) {
-
             this.submitProposalLumpsum.reset();
             this.spinnerService.hide();
             this.openSnackBar('Proposal submitted successfully!', 'success');
@@ -398,6 +405,7 @@ export class SubmitProposalLumpsumComponent implements OnInit {
     }
   }
 
+  // This function is used for after submitting the form to set all the values ​​as default
   getResetData() {
     this.buttonEnableStatus = false;
     this.selectedStatus = 'milestone';
@@ -413,6 +421,7 @@ export class SubmitProposalLumpsumComponent implements OnInit {
     this.ngOnInit();
   }
 
+  // It is constant value as a array format
   public staticList = [
     "Digital Transformation",
     "Architecture",
@@ -424,6 +433,7 @@ export class SubmitProposalLumpsumComponent implements OnInit {
     "QA & QC"
   ];
 
+  // It is used to handle static result selected
   public handleStaticResultSelected(result) {
     if (result) {
       this.toolsquery.push(result);
@@ -431,19 +441,24 @@ export class SubmitProposalLumpsumComponent implements OnInit {
       })
     }
   }
+
+  // It is used to delete tool data as array format
   deletetoolsdata(index: number) {
     this.toolsquery.splice(index, 1);
-    console.log("After - ", this.toolsquery)
   }
 
+  // It is set for remove all value as NULL
   clear(e: any) {
     this.searchwidth = '0';
     return e.target.value = '';
   }
+
+  // Onchange event value set NULL
   onChange(e: any) {
     return e.target.value = '';
   }
 
+  // It is constant value as a array format
   public workdata = [
     "Buildings",
     "Transportation",
@@ -453,6 +468,7 @@ export class SubmitProposalLumpsumComponent implements OnInit {
     "Technology"
   ];
 
+  // It is used to handle static work selected
   public handleStaticResultwork(result) {
     if (result) {
       this.workquery.push(result);
@@ -460,10 +476,13 @@ export class SubmitProposalLumpsumComponent implements OnInit {
       })
     }
   }
+
+  // It is used to delete tool data as array format
   deleteworkdata(index: number) {
     this.workquery.splice(index, 1);
   }
 
+  // It is used for to remove extra space and all string value break as \n 
   textareaspace(e: any, name: any) {
     var text = e.target.value;
     if (name == 'cover') {
@@ -486,7 +505,7 @@ export class SubmitProposalLumpsumComponent implements OnInit {
     }
   }
 
-  //This function is used for accept only character
+  // This function is used for accept only character
   letterOnly(event): any {
     const charCode = (event.which) ? event.which : event.keyCode;
     if ((charCode < 48 || charCode > 57)) {

@@ -1,4 +1,3 @@
-<app-app-header></app-app-header>
 <main class="comon_main internal_pages_prnt  submit-perposal-page">
     <div class="cmn-pading-top cl-dash" style="margin-top: 80px!important">
         <section class="client_post_job talent-profile cmn-pading-top">
@@ -6,6 +5,7 @@
                 <br>
                 <ngx-spinner size="medium" template="<img src='assets/images/Loader6a.gif' />" [type]="typeSelected">
                 </ngx-spinner>
+                <!-- Start : Submit proposal Lumpsum form -->
                 <form [formGroup]="submitProposalLumpsum" (ngSubmit)="onSubmit()"
                     onkeydown="return event.key != 'Enter';">
                     <!--Start: Submit Proposal Block-->
@@ -83,8 +83,6 @@
                                         <span class="input-group-text">{{toolsdata}}&nbsp;<a href="javascript:void(0)"
                                                 (click)="deletetoolsdata(i)">X</a></span>
                                     </div>
-
-
                                     <div class="row">
                                         <input type="text"
                                             style="border: none !important; border-radius:0px!important;margin-left: 15px;width: 385px;"
@@ -102,23 +100,17 @@
                                                         <div style="padding: 0px!important;">
                                                             <p class="font-14 font-weight-500 mb-0 title">{{
                                                                 result.result }}</p>
-
                                                         </div>
                                                     </div>
                                                 </div>
                                             </div>
                                         </ng-template>
                                     </div>
-
-
-
                                     <img src="assets/imgs/search.svg" class="search-btn position-absolute" />
                                 </div>
-
                                 <div *ngIf="submitted && this.toolsquery.length == 0" class="invalid-feedback">
                                     <div *ngIf="this.toolsquery.length == 0">Tools & Technologies are required</div>
                                 </div>
-
                             </div>
                         </div>
                         <div class="form-group mb-1">
@@ -140,7 +132,6 @@
                             <div class="file-upload d-flex align-items-center justify-content-center font-16"
                                 style="margin-bottom: 0.5rem;">
                                 <div>
-
                                     <label class="custom-file-upload">
                                         <input type="file" formControlName="files" id="files" multiple
                                             class="form-control" (change)="onFileChange($event)" accept=".pdf" />
@@ -166,7 +157,6 @@
                     </div>
                     <!--End: Technical Offer Block-->
 
-
                     <!--Start: Financial Offer Block-->
                     <div class="noti-wrap job-dt-wrap pd-bottom-0">
                         <div class="job-title d-flex justify-content-between mt-2">
@@ -177,7 +167,6 @@
                                 Client’s Budget: $150.00 USD
                             </h3>
                         </div>
-
                         <div class="form-group">
                             <h3 class="sub-title mb-3 promot">How do you want to be paid?</h3>
                             <div class="mat-rd">
@@ -204,10 +193,8 @@
                                                 been delivered.</span>
                                         </div>
                                     </div>
-
                                 </mat-radio-group>
                             </div>
-
                             <div *ngIf="selectedStatus == 'milestone'" class="pl-2" id="byMilestores"
                                 formArrayName="Rows">
                                 <h3 class="promot sub-title">
@@ -239,11 +226,9 @@
                                                 <mat-form-field>
                                                     <input matInput [min]="min1Date" [matDatepicker]="picker"
                                                         value="11-04-2021" formControlName="dueDate" readonly>
-
                                                     <mat-datepicker-toggle matSuffix [for]="picker">
                                                     </mat-datepicker-toggle>
                                                     <mat-datepicker #picker></mat-datepicker>
-
                                                 </mat-form-field>
                                             </div>
                                             <div *ngIf="submitted" class="invalid-feedback">
@@ -269,7 +254,6 @@
                                                     </div>
                                                 </div>
                                             </div>
-
                                         </div>
                                     </div>
                                     <div class="col-1" style="text-align:center;top:42px" *ngIf="formArr > 1">
@@ -300,7 +284,6 @@
                                                     value="{{this.totalServiceFee}}">
                                             </div>
                                         </div>
-
                                         <hr />
                                         <div class="row">
                                             <div class="col-8">
@@ -332,13 +315,10 @@
                                     </div>
                                 </div>
                             </div>
-
-
                             <div *ngIf="selectedStatus == 'project'" class="pl-2" id="byProduct">
                                 <h3 class="promot sub-title">
                                     What is the full amount you'd like to bid for this job?
                                 </h3>
-
                                 <div class="row mt-4">
                                     <div class="col-lg-8">
                                         <div class="row justify-content-between align-items-center">
@@ -363,7 +343,6 @@
                                                 </div>
                                             </div>
                                         </div>
-
                                         <hr />
                                         <div class="row justify-content-between align-items-center">
                                             <div class="col-md-6">
@@ -402,7 +381,6 @@
                                         <img src="assets/imgs/shield-img.svg" />
                                     </div>
                                 </div>
-
                             </div>
                         </div>
                     </div>
@@ -415,7 +393,8 @@
                             <div class="row mb-3 d-flex justify-content-between">
                                 <div class="col-lg-4">
                                     <label class="text-black font-16">Expected Project Start Date <span
-                                            class="astrick">*</span></label>
+                                            class="astrick">*</span>
+                                    </label>
                                     <div class="date-pick form-control singleline" id="date-pick">
                                         <mat-form-field>
                                             <input matInput [matDatepicker]="picker1" [min]="min1Date"
@@ -450,7 +429,6 @@
 									font-size: 10px;">Project Completion Date is required</div>
                                     </div>
                                 </div>
-
                                 <div class="col-lg-3" *ngIf="this.showDayduration==true">
                                     <label class="text-black font-16">&nbsp;</label>
                                     <div class="d-flex justify-content-between" style="border-bottom: 1px solid #666;">
@@ -462,7 +440,6 @@
                                             <option>Year(s)</option>
                                         </select>
                                     </div>
-
                                 </div>
                             </div>
                         </div>
@@ -478,7 +455,6 @@
                     <!--Start: Terms Block-->
                     <div class="noti-wrap job-dt-wrap">
                         <h2 class="job-title promot">Terms & Conditions <span class="astrick">*</span></h2>
-
                         <div class="sub-expension-inner sub-expension-one sub-expension-inner-ml-21 checkblock">
                             <mat-checkbox formControlName="termsAndconditions" value="1" class="mr-2 font-16">I agree to
                                 the <a class="green-link">Terms and Conditions</a> provided by CONSTAL.</mat-checkbox>
@@ -487,7 +463,6 @@
 									font-size: 10px;">Terms & Conditions is required</div>
                             </div>
                         </div>
-
                         <div class="sub-expension-inner sub-expension-one sub-expension-inner-ml-21 checkblock">
                             <mat-checkbox formControlName="termsAndconditions" value="1" class="mr-2 font-16">I agree to
                                 the <a class="green-link">Non-Disclosure Agreement</a> provided by CONSTAL.
@@ -509,16 +484,14 @@
 
                     </div>
                     <!--End: Terms Block-->
-
                     <div class="px-4 py-4  justify-content-between text-right">
                         <button class="btn-theme-2 bg-green">
                             Submit
                         </button>
                     </div>
-
                 </form>
+                <!-- End : Submit proposal Lumpsum form -->
             </div>
         </section>
     </div>
 </main>
-<app-footer></app-footer>
